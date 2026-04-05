@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useRef, useMemo, useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import { EffectComposer, N8AO } from '@react-three/postprocessing'
@@ -12,65 +12,88 @@ import {
 } from '@react-three/rapier'
 import './styles/TechStack.css'
 
-// Tech stack — core skills + Bidsquire project stack
 const TECHS = [
-  { name: 'n8n',        svg: '/images/n8n.svg',         bg: '#ea4b71' },
-  { name: 'Python',     svg: '/images/python.svg',       bg: '#3572a5' },
-  { name: 'TypeScript', svg: '/images/typescript.svg',   bg: '#3178c6' },
-  { name: 'React',      svg: '/images/react.svg',        bg: '#222c3a' },
-  { name: 'OpenAI',     svg: '/images/openai.svg',       bg: '#10a37f' },
-  { name: 'Node.js',    svg: '/images/nodejs.svg',       bg: '#215732' },
-  { name: 'JavaScript', svg: '/images/javascript.svg',   bg: '#323330' },
-  { name: 'MongoDB',    svg: '/images/mongodb.svg',      bg: '#023430' },
-  { name: 'PostgreSQL', svg: '/images/postgresql.svg',   bg: '#336791' },
-  { name: 'Docker',     svg: '/images/docker.svg',       bg: '#1d63ed' },
-  { name: 'GitHub',     svg: '/images/github.svg',       bg: '#24292f' },
-  { name: 'WhatsApp',   svg: '/images/whatsapp.svg',     bg: '#25d366' },
+  { name: 'n8n',        abbr: 'n8n',  bg: '#ea4b71' },
+  { name: 'Python',     abbr: 'Py',   bg: '#3572a5' },
+  { name: 'TypeScript', abbr: 'TS',   bg: '#3178c6' },
+  { name: 'React',      abbr: 'Re',   bg: '#1a2535' },
+  { name: 'OpenAI',     abbr: 'AI',   bg: '#10a37f' },
+  { name: 'Node.js',    abbr: 'Node', bg: '#3d7a3d' },
+  { name: 'JavaScript', abbr: 'JS',   bg: '#e8c03a' },
+  { name: 'MongoDB',    abbr: 'MDB',  bg: '#023430' },
+  { name: 'PostgreSQL', abbr: 'PG',   bg: '#336791' },
+  { name: 'Docker',     abbr: 'Dock', bg: '#1d63ed' },
+  { name: 'GitHub',     abbr: 'GH',   bg: '#24292f' },
+  { name: 'WhatsApp',   abbr: 'WA',   bg: '#25d366' },
+  { name: 'VAPI',       abbr: 'VAPI', bg: '#7c3aed' },
+  { name: 'Webhooks',   abbr: 'WH',   bg: '#9b6fff' },
 ]
 
-async function loadSvgTexture(svgPath: string, bg: string): Promise<THREE.CanvasTexture> {
+// Build all textures synchronously at module load — no async, no fetch
+function makeTechTexture(tech: typeof TECHS[number]): THREE.CanvasTexture {
   const size = 256
   const canvas = document.createElement('canvas')
   canvas.width = size
   canvas.height = size
   const ctx = canvas.getContext('2d')!
 
-  // Draw circular background
-  ctx.fillStyle = bg
+  // Background circle with radial gradient
+  const grad = ctx.createRadialGradient(size * 0.4, size * 0.35, 0, size / 2, size / 2, size / 2)
+  grad.addColorStop(0, lighten(tech.bg, 30))
+  grad.addColorStop(1, tech.bg)
+  ctx.fillStyle = grad
   ctx.beginPath()
   ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2)
   ctx.fill()
 
-  try {
-    // Fetch SVG text, force fill to white so it's visible on any bg color
-    const res = await fetch(svgPath)
-    let svgText = await res.text()
-    svgText = svgText.replace(/<svg/, '<svg fill="white"')
+  // Subtle inner ring
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)'
+  ctx.lineWidth = 3
+  ctx.beginPath()
+  ctx.arc(size / 2, size / 2, size / 2 - 8, 0, Math.PI * 2)
+  ctx.stroke()
 
-    const blob = new Blob([svgText], { type: 'image/svg+xml' })
-    const url = URL.createObjectURL(blob)
+  // Abbreviation text
+  const isShort = tech.abbr.length <= 2
+  const fontSize = isShort ? 100 : tech.abbr.length === 3 ? 78 : 62
+  ctx.fillStyle = tech.name === 'JavaScript' ? '#1a1a1a' : '#ffffff'
+  ctx.font = `900 ${fontSize}px Arial, sans-serif`
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText(tech.abbr, size / 2, size / 2 - 8)
 
-    await new Promise<void>((resolve, reject) => {
-      const img = new Image()
-      img.onload = () => {
-        const pad = size * 0.22
-        ctx.drawImage(img, pad, pad, size - pad * 2, size - pad * 2)
-        URL.revokeObjectURL(url)
-        resolve()
-      }
-      img.onerror = reject
-      img.src = url
-    })
-  } catch {
-    // fallback: just the colored circle, no logo
-  }
+  // Tech name below
+  ctx.font = `500 22px Arial, sans-serif`
+  ctx.fillStyle = tech.name === 'JavaScript' ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.55)'
+  ctx.fillText(tech.name, size / 2, size / 2 + 52)
 
   return new THREE.CanvasTexture(canvas)
 }
 
+function lighten(hex: string, amount: number): string {
+  const num = parseInt(hex.replace('#', ''), 16)
+  const r = Math.min(255, (num >> 16) + amount)
+  const g = Math.min(255, ((num >> 8) & 0xff) + amount)
+  const b = Math.min(255, (num & 0xff) + amount)
+  return `rgb(${r},${g},${b})`
+}
+
+// Pre-build materials at module level — ready instantly when Canvas mounts
+const MATERIALS = TECHS.map(tech => {
+  const texture = makeTechTexture(tech)
+  return new THREE.MeshPhysicalMaterial({
+    map: texture,
+    emissive: new THREE.Color(tech.bg),
+    emissiveIntensity: 0.15,
+    metalness: 0.3,
+    roughness: 0.8,
+    clearcoat: 0.2,
+  })
+})
+
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28)
 const spheres = [...Array(36)].map(() => ({
-  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
+  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)] as number,
 }))
 
 type SphereProps = {
@@ -132,55 +155,23 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: { vec?: THREE.Vector3;
 export default function TechStack() {
   const [isActive, setIsActive] = useState(false)
   const [inView, setInView] = useState(false)
-  const [materials, setMaterials] = useState<THREE.MeshPhysicalMaterial[]>([])
   const sectionRef = useRef<HTMLElement>(null)
 
-  // Only mount the Canvas when the section enters the viewport
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect() } },
+    const mountObserver = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); mountObserver.disconnect() } },
       { rootMargin: '200px' }
     )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  // Activate physics when the techstack section itself enters view
-  useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(
+    const activeObserver = new IntersectionObserver(
       ([entry]) => setIsActive(entry.isIntersecting),
       { threshold: 0.1 }
     )
-    observer.observe(el)
-    return () => observer.disconnect()
+    mountObserver.observe(el)
+    activeObserver.observe(el)
+    return () => { mountObserver.disconnect(); activeObserver.disconnect() }
   }, [])
-
-  useEffect(() => {
-    if (!inView) return
-    Promise.all(TECHS.map(t => loadSvgTexture(t.svg, t.bg))).then(textures => {
-      setMaterials(textures.map(texture =>
-        new THREE.MeshPhysicalMaterial({
-          map: texture,
-          emissive: '#ffffff',
-          emissiveMap: texture,
-          emissiveIntensity: 0.25,
-          metalness: 0.4,
-          roughness: 1,
-          clearcoat: 0.1,
-        })
-      ))
-    })
-  }, [])
-
-  const fallbackMaterials = useMemo(() =>
-    TECHS.map(t => new THREE.MeshPhysicalMaterial({ color: t.bg, roughness: 1, metalness: 0.4 }))
-  , [])
-
-  const activeMaterials = materials.length > 0 ? materials : fallbackMaterials
 
   return (
     <section ref={sectionRef} className="techstack section">
@@ -188,32 +179,34 @@ export default function TechStack() {
       <h2 className="section-title">Tools I Use</h2>
 
       {!inView && <div className="techstack__placeholder" />}
-      {inView && <Canvas
-        shadows
-        gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
-        camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-        onCreated={state => (state.gl.toneMappingExposure = 1.5)}
-        className="techstack__canvas"
-      >
-        <ambientLight intensity={1} />
-        <spotLight position={[20, 20, 25]} penumbra={1} angle={0.2} color="white" castShadow shadow-mapSize={[512, 512]} />
-        <directionalLight position={[0, 5, -4]} intensity={2} />
-        <Physics gravity={[0, 0, 0]}>
-          <Pointer isActive={isActive} />
-          {spheres.map((props, i) => (
-            <SphereGeo
-              key={i}
-              {...props}
-              material={activeMaterials[i % activeMaterials.length]}
-              isActive={isActive}
-            />
-          ))}
-        </Physics>
-        <Environment preset="city" environmentIntensity={0.5} />
-        <EffectComposer enableNormalPass={false}>
-          <N8AO color="#0b080c" aoRadius={2} intensity={1.15} />
-        </EffectComposer>
-      </Canvas>}
+      {inView && (
+        <Canvas
+          shadows
+          gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
+          camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
+          onCreated={state => (state.gl.toneMappingExposure = 1.5)}
+          className="techstack__canvas"
+        >
+          <ambientLight intensity={1} />
+          <spotLight position={[20, 20, 25]} penumbra={1} angle={0.2} color="white" castShadow shadow-mapSize={[512, 512]} />
+          <directionalLight position={[0, 5, -4]} intensity={2} />
+          <Physics gravity={[0, 0, 0]}>
+            <Pointer isActive={isActive} />
+            {spheres.map((props, i) => (
+              <SphereGeo
+                key={i}
+                {...props}
+                material={MATERIALS[i % MATERIALS.length]}
+                isActive={isActive}
+              />
+            ))}
+          </Physics>
+          <Environment preset="city" environmentIntensity={0.5} />
+          <EffectComposer enableNormalPass={false}>
+            <N8AO color="#0b080c" aoRadius={2} intensity={1.15} />
+          </EffectComposer>
+        </Canvas>
+      )}
     </section>
   )
 }
