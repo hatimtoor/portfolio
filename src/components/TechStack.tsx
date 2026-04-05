@@ -139,14 +139,16 @@ export default function TechStack() {
     return () => observer.disconnect()
   }, [])
 
+  // Activate physics when the techstack section itself enters view
   useEffect(() => {
-    const handleScroll = () => {
-      const workEl = document.getElementById('work')
-      if (!workEl) return
-      setIsActive(workEl.getBoundingClientRect().top < window.innerHeight)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsActive(entry.isIntersecting),
+      { threshold: 0.1 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
