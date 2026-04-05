@@ -123,7 +123,21 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: { vec?: THREE.Vector3;
 
 export default function TechStack() {
   const [isActive, setIsActive] = useState(false)
+  const [inView, setInView] = useState(false)
   const [materials, setMaterials] = useState<THREE.MeshPhysicalMaterial[]>([])
+  const sectionRef = useRef<HTMLElement>(null)
+
+  // Only mount the Canvas when the section enters the viewport
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect() } },
+      { rootMargin: '200px' }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -136,6 +150,7 @@ export default function TechStack() {
   }, [])
 
   useEffect(() => {
+    if (!inView) return
     Promise.all(TECHS.map(t => loadSvgTexture(t.svg, t.bg))).then(textures => {
       setMaterials(textures.map(texture =>
         new THREE.MeshPhysicalMaterial({
@@ -158,11 +173,12 @@ export default function TechStack() {
   const activeMaterials = materials.length > 0 ? materials : fallbackMaterials
 
   return (
-    <section className="techstack section">
+    <section ref={sectionRef} className="techstack section">
       <p className="section-label">Tech Stack</p>
       <h2 className="section-title">Tools I Use</h2>
 
-      <Canvas
+      {!inView && <div className="techstack__placeholder" />}
+      {inView && <Canvas
         shadows
         gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
@@ -187,7 +203,7 @@ export default function TechStack() {
         <EffectComposer enableNormalPass={false}>
           <N8AO color="#0b080c" aoRadius={2} intensity={1.15} />
         </EffectComposer>
-      </Canvas>
+      </Canvas>}
     </section>
   )
 }
