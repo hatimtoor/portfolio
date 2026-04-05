@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    allowedHosts: ['expressless-electrothermal-shanda.ngrok-free.dev'],
+  },
   build: {
     rollupOptions: {
       output: {
