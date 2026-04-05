@@ -3,11 +3,19 @@ import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 import { info } from '../data/portfolioData'
 import './styles/Landing.css'
 
+const BallsScene = lazy(() => import('./Character/BallsScene'))
 const Scene = lazy(() => import('./Character/Scene'))
 
 export default function Landing() {
   return (
     <section id="home" className="landing">
+      {/* Physics balls — full background */}
+      <div className="landing__balls">
+        <Suspense fallback={null}>
+          <BallsScene />
+        </Suspense>
+      </div>
+
       <div className="landing__content">
         <p className="landing__greeting">Available for Remote Work</p>
 
