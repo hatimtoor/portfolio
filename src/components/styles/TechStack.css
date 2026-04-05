@@ -1,0 +1,18 @@
+.techstack {
+  border-top: 1px solid var(--border);
+  padding-bottom: 0;
+}
+
+.techstack__canvas {
+  width: 100% !important;
+  height: 600px !important;
+  margin-top: 3rem;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .techstack__canvas {
+    height: 400px !important;
+  }
+}

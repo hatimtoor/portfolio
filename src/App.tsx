@@ -5,6 +5,7 @@ import Navbar from './components/Navbar'
 import Landing from './components/Landing'
 import About from './components/About'
 import WhatIDo from './components/WhatIDo'
+import TechStack from './components/TechStack'
 import Work from './components/Work'
 import Career from './components/Career'
 import Contact from './components/Contact'
@@ -28,6 +29,7 @@ export default function App() {
             <Landing />
             <About />
             <WhatIDo />
+            <TechStack />
             <Work />
             <Career />
             <Contact />
