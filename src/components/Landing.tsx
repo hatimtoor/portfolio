@@ -56,7 +56,7 @@ export default function Landing() {
             <span>Years Exp.</span>
           </div>
           <div>
-            <strong>5+</strong>
+            <strong>50+</strong>
             <span>AI Projects</span>
           </div>
         </div>
