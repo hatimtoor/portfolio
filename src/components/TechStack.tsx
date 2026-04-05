@@ -12,57 +12,56 @@ import {
 } from '@react-three/rapier'
 import './styles/TechStack.css'
 
-const TECHS: { label: string; abbr: string; bg: string; fg: string }[] = [
-  { label: 'n8n',        abbr: 'n8n',   bg: '#ea4b71', fg: '#fff' },
-  { label: 'VAPI',       abbr: 'VAPI',  bg: '#7c3aed', fg: '#fff' },
-  { label: 'OpenAI',     abbr: 'AI',    bg: '#10a37f', fg: '#fff' },
-  { label: 'Python',     abbr: 'Py',    bg: '#3572a5', fg: '#ffd343' },
-  { label: 'REST API',   abbr: 'API',   bg: '#c2a4ff', fg: '#0b080c' },
-  { label: 'WhatsApp',   abbr: 'WA',    bg: '#25d366', fg: '#fff' },
-  { label: 'TypeScript', abbr: 'TS',    bg: '#3178c6', fg: '#fff' },
-  { label: 'React',      abbr: 'Re',    bg: '#61dafb', fg: '#0b080c' },
-  { label: 'Webhooks',   abbr: 'WH',    bg: '#9b6fff', fg: '#fff' },
-  { label: 'Google',     abbr: 'G',     bg: '#4285f4', fg: '#fff' },
+// Tech stack — core skills + Bidsquire project stack
+const TECHS = [
+  { name: 'n8n',        svg: '/images/n8n.svg',         bg: '#ea4b71' },
+  { name: 'Python',     svg: '/images/python.svg',       bg: '#3572a5' },
+  { name: 'TypeScript', svg: '/images/typescript.svg',   bg: '#3178c6' },
+  { name: 'React',      svg: '/images/react.svg',        bg: '#222c3a' },
+  { name: 'OpenAI',     svg: '/images/openai.svg',       bg: '#10a37f' },
+  { name: 'Node.js',    svg: '/images/nodejs.svg',       bg: '#215732' },
+  { name: 'JavaScript', svg: '/images/javascript.svg',   bg: '#323330' },
+  { name: 'MongoDB',    svg: '/images/mongodb.svg',      bg: '#023430' },
+  { name: 'PostgreSQL', svg: '/images/postgresql.svg',   bg: '#336791' },
+  { name: 'Docker',     svg: '/images/docker.svg',       bg: '#1d63ed' },
+  { name: 'GitHub',     svg: '/images/github.svg',       bg: '#24292f' },
+  { name: 'WhatsApp',   svg: '/images/whatsapp.svg',     bg: '#25d366' },
 ]
 
-function makeTexture(abbr: string, bg: string, fg: string): THREE.CanvasTexture {
-  const size = 256
-  const canvas = document.createElement('canvas')
-  canvas.width = size
-  canvas.height = size
-  const ctx = canvas.getContext('2d')!
+function loadSvgTexture(svgPath: string, bg: string): Promise<THREE.CanvasTexture> {
+  return new Promise(resolve => {
+    const size = 256
+    const canvas = document.createElement('canvas')
+    canvas.width = size
+    canvas.height = size
+    const ctx = canvas.getContext('2d')!
 
-  // Background circle
-  const grad = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2)
-  grad.addColorStop(0, bg)
-  grad.addColorStop(1, shadeColor(bg, -30))
-  ctx.fillStyle = grad
-  ctx.beginPath()
-  ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2)
-  ctx.fill()
+    const drawBackground = () => {
+      ctx.fillStyle = bg
+      ctx.beginPath()
+      ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2)
+      ctx.fill()
+    }
 
-  // Text
-  const fontSize = abbr.length > 3 ? 64 : 80
-  ctx.fillStyle = fg
-  ctx.font = `900 ${fontSize}px Inter, Arial, sans-serif`
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-  ctx.fillText(abbr, size / 2, size / 2)
-
-  return new THREE.CanvasTexture(canvas)
-}
-
-function shadeColor(hex: string, amount: number): string {
-  const num = parseInt(hex.replace('#', ''), 16)
-  const r = Math.max(0, Math.min(255, (num >> 16) + amount))
-  const g = Math.max(0, Math.min(255, ((num >> 8) & 0xff) + amount))
-  const b = Math.max(0, Math.min(255, (num & 0xff) + amount))
-  return `rgb(${r},${g},${b})`
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      drawBackground()
+      const pad = size * 0.22
+      ctx.drawImage(img, pad, pad, size - pad * 2, size - pad * 2)
+      resolve(new THREE.CanvasTexture(canvas))
+    }
+    img.onerror = () => {
+      // fallback — just background circle
+      drawBackground()
+      resolve(new THREE.CanvasTexture(canvas))
+    }
+    img.src = svgPath
+  })
 }
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28)
-
-const spheres = [...Array(30)].map(() => ({
+const spheres = [...Array(36)].map(() => ({
   scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
 }))
 
@@ -74,29 +73,17 @@ type SphereProps = {
   isActive: boolean
 }
 
-function SphereGeo({
-  vec = new THREE.Vector3(),
-  scale,
-  r = THREE.MathUtils.randFloatSpread,
-  material,
-  isActive,
-}: SphereProps) {
+function SphereGeo({ vec = new THREE.Vector3(), scale, r = THREE.MathUtils.randFloatSpread, material, isActive }: SphereProps) {
   const api = useRef<RapierRigidBody | null>(null)
 
   useFrame((_state, delta) => {
-    if (!isActive) return
+    if (!isActive || !api.current) return
     delta = Math.min(0.1, delta)
     const impulse = vec
-      .copy(api.current!.translation())
+      .copy(api.current.translation())
       .normalize()
-      .multiply(
-        new THREE.Vector3(
-          -50 * delta * scale,
-          -150 * delta * scale,
-          -50 * delta * scale
-        )
-      )
-    api.current?.applyImpulse(impulse, true)
+      .multiply(new THREE.Vector3(-50 * delta * scale, -150 * delta * scale, -50 * delta * scale))
+    api.current.applyImpulse(impulse, true)
   })
 
   return (
@@ -109,51 +96,26 @@ function SphereGeo({
       colliders={false}
     >
       <BallCollider args={[scale]} />
-      <CylinderCollider
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0, 1.2 * scale]}
-        args={[0.15 * scale, 0.275 * scale]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        scale={scale}
-        geometry={sphereGeometry}
-        material={material}
-        rotation={[0.3, 1, 1]}
-      />
+      <CylinderCollider rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 1.2 * scale]} args={[0.15 * scale, 0.275 * scale]} />
+      <mesh castShadow receiveShadow scale={scale} geometry={sphereGeometry} material={material} />
     </RigidBody>
   )
 }
 
-type PointerProps = {
-  vec?: THREE.Vector3
-  isActive: boolean
-}
-
-function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
+function Pointer({ vec = new THREE.Vector3(), isActive }: { vec?: THREE.Vector3; isActive: boolean }) {
   const ref = useRef<RapierRigidBody>(null)
 
   useFrame(({ pointer, viewport }) => {
     if (!isActive) return
-    const targetVec = vec.lerp(
-      new THREE.Vector3(
-        (pointer.x * viewport.width) / 2,
-        (pointer.y * viewport.height) / 2,
-        0
-      ),
+    const t = vec.lerp(
+      new THREE.Vector3((pointer.x * viewport.width) / 2, (pointer.y * viewport.height) / 2, 0),
       0.2
     )
-    ref.current?.setNextKinematicTranslation(targetVec)
+    ref.current?.setNextKinematicTranslation(t)
   })
 
   return (
-    <RigidBody
-      position={[100, 100, 100]}
-      type="kinematicPosition"
-      colliders={false}
-      ref={ref}
-    >
+    <RigidBody position={[100, 100, 100]} type="kinematicPosition" colliders={false} ref={ref}>
       <BallCollider args={[2]} />
     </RigidBody>
   )
@@ -161,32 +123,39 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
 
 export default function TechStack() {
   const [isActive, setIsActive] = useState(false)
+  const [materials, setMaterials] = useState<THREE.MeshPhysicalMaterial[]>([])
 
   useEffect(() => {
     const handleScroll = () => {
       const workEl = document.getElementById('work')
       if (!workEl) return
-      const threshold = workEl.getBoundingClientRect().top
-      setIsActive(threshold < window.innerHeight)
+      setIsActive(workEl.getBoundingClientRect().top < window.innerHeight)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const materials = useMemo(() => {
-    return TECHS.map(({ abbr, bg, fg }) => {
-      const texture = makeTexture(abbr, bg, fg)
-      return new THREE.MeshPhysicalMaterial({
-        map: texture,
-        emissive: '#ffffff',
-        emissiveMap: texture,
-        emissiveIntensity: 0.3,
-        metalness: 0.5,
-        roughness: 1,
-        clearcoat: 0.1,
-      })
+  useEffect(() => {
+    Promise.all(TECHS.map(t => loadSvgTexture(t.svg, t.bg))).then(textures => {
+      setMaterials(textures.map(texture =>
+        new THREE.MeshPhysicalMaterial({
+          map: texture,
+          emissive: '#ffffff',
+          emissiveMap: texture,
+          emissiveIntensity: 0.25,
+          metalness: 0.4,
+          roughness: 1,
+          clearcoat: 0.1,
+        })
+      ))
     })
   }, [])
+
+  const fallbackMaterials = useMemo(() =>
+    TECHS.map(t => new THREE.MeshPhysicalMaterial({ color: t.bg, roughness: 1, metalness: 0.4 }))
+  , [])
+
+  const activeMaterials = materials.length > 0 ? materials : fallbackMaterials
 
   return (
     <section className="techstack section">
@@ -201,14 +170,7 @@ export default function TechStack() {
         className="techstack__canvas"
       >
         <ambientLight intensity={1} />
-        <spotLight
-          position={[20, 20, 25]}
-          penumbra={1}
-          angle={0.2}
-          color="white"
-          castShadow
-          shadow-mapSize={[512, 512]}
-        />
+        <spotLight position={[20, 20, 25]} penumbra={1} angle={0.2} color="white" castShadow shadow-mapSize={[512, 512]} />
         <directionalLight position={[0, 5, -4]} intensity={2} />
         <Physics gravity={[0, 0, 0]}>
           <Pointer isActive={isActive} />
@@ -216,7 +178,7 @@ export default function TechStack() {
             <SphereGeo
               key={i}
               {...props}
-              material={materials[i % materials.length]}
+              material={activeMaterials[i % activeMaterials.length]}
               isActive={isActive}
             />
           ))}

@@ -1,9 +1,6 @@
-import { Suspense, lazy } from 'react'
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 import { info } from '../data/portfolioData'
 import './styles/Landing.css'
-
-const Scene = lazy(() => import('./Character/Scene'))
 
 export default function Landing() {
   return (
@@ -42,13 +39,20 @@ export default function Landing() {
         </div>
       </div>
 
-      <div className="landing__canvas">
-        <Suspense fallback={null}>
-          <Scene />
-        </Suspense>
-        <div className="landing__canvas-badge">
+      <div className="landing__hero-right">
+        <div className="landing__tag">AI Automation</div>
+        <div className="landing__tag">n8n Expert</div>
+        <div className="landing__tag">LLM Agents</div>
+        <div className="landing__tag">Voice AI</div>
+        <div className="landing__tag">REST APIs</div>
+        <div className="landing__tag">Workflow Design</div>
+        <div className="landing__badge">
           <strong>3+</strong>
-          Years of Experience
+          <span>Years of<br />Experience</span>
+        </div>
+        <div className="landing__badge landing__badge--alt">
+          <strong>5+</strong>
+          <span>AI Projects<br />Shipped</span>
         </div>
       </div>
 

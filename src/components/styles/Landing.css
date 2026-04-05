@@ -20,17 +20,6 @@
   pointer-events: none;
 }
 
-.landing__balls {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.landing__balls canvas {
-  pointer-events: all;
-}
-
 .landing__content {
   z-index: 1;
   padding-top: 6rem;
@@ -147,32 +136,82 @@
   background: var(--border);
 }
 
-.landing__canvas {
-  height: 600px;
+/* Right side — floating tags + stat badges */
+.landing__hero-right {
   position: relative;
-  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-content: center;
+  justify-content: center;
+  padding: 6rem 2rem 2rem;
+  min-height: 500px;
 }
 
-.landing__canvas-badge {
-  position: absolute;
-  bottom: 10%;
-  left: 10%;
-  background: rgba(11, 8, 12, 0.7);
+.landing__tag {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
   border: 1px solid var(--border);
+  padding: 0.55rem 1.1rem;
+  border-radius: 100px;
+  background: rgba(194, 164, 255, 0.03);
+  transition: color 0.3s, border-color 0.3s, background 0.3s, transform 0.3s;
+  animation: floatTag 6s ease-in-out infinite;
+}
+
+.landing__tag:nth-child(2) { animation-delay: -1s; }
+.landing__tag:nth-child(3) { animation-delay: -2s; }
+.landing__tag:nth-child(4) { animation-delay: -3s; }
+.landing__tag:nth-child(5) { animation-delay: -4s; }
+.landing__tag:nth-child(6) { animation-delay: -5s; }
+
+.landing__tag:hover {
+  color: var(--accent);
+  border-color: rgba(194, 164, 255, 0.3);
+  background: var(--accent-dim);
+  transform: translateY(-3px);
+}
+
+@keyframes floatTag {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.landing__badge {
+  position: absolute;
+  bottom: 18%;
+  right: 8%;
+  background: rgba(11, 8, 12, 0.7);
+  border: 1px solid rgba(194, 164, 255, 0.2);
   backdrop-filter: blur(12px);
-  padding: 0.8rem 1.2rem;
-  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.landing__badge--alt {
+  bottom: auto;
+  top: 22%;
+  right: 5%;
+}
+
+.landing__badge strong {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.landing__badge span {
   font-size: 0.72rem;
   color: var(--muted);
-  pointer-events: none;
-}
-
-.landing__canvas-badge strong {
-  display: block;
-  color: var(--text);
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.1rem;
+  line-height: 1.4;
 }
 
 .landing__scroll-hint {
@@ -209,9 +248,15 @@
     text-align: center;
   }
 
-  .landing__canvas {
-    height: 380px;
+  .landing__hero-right {
+    min-height: 280px;
+    padding: 1rem;
     order: -1;
+    justify-content: center;
+  }
+
+  .landing__badge {
+    position: static;
   }
 
   .landing__greeting {
