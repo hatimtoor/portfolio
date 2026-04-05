@@ -28,36 +28,44 @@ const TECHS = [
   { name: 'WhatsApp',   svg: '/images/whatsapp.svg',     bg: '#25d366' },
 ]
 
-function loadSvgTexture(svgPath: string, bg: string): Promise<THREE.CanvasTexture> {
-  return new Promise(resolve => {
-    const size = 256
-    const canvas = document.createElement('canvas')
-    canvas.width = size
-    canvas.height = size
-    const ctx = canvas.getContext('2d')!
+async function loadSvgTexture(svgPath: string, bg: string): Promise<THREE.CanvasTexture> {
+  const size = 256
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')!
 
-    const drawBackground = () => {
-      ctx.fillStyle = bg
-      ctx.beginPath()
-      ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2)
-      ctx.fill()
-    }
+  // Draw circular background
+  ctx.fillStyle = bg
+  ctx.beginPath()
+  ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2)
+  ctx.fill()
 
-    const img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.onload = () => {
-      drawBackground()
-      const pad = size * 0.22
-      ctx.drawImage(img, pad, pad, size - pad * 2, size - pad * 2)
-      resolve(new THREE.CanvasTexture(canvas))
-    }
-    img.onerror = () => {
-      // fallback — just background circle
-      drawBackground()
-      resolve(new THREE.CanvasTexture(canvas))
-    }
-    img.src = svgPath
-  })
+  try {
+    // Fetch SVG text, force fill to white so it's visible on any bg color
+    const res = await fetch(svgPath)
+    let svgText = await res.text()
+    svgText = svgText.replace(/<svg/, '<svg fill="white"')
+
+    const blob = new Blob([svgText], { type: 'image/svg+xml' })
+    const url = URL.createObjectURL(blob)
+
+    await new Promise<void>((resolve, reject) => {
+      const img = new Image()
+      img.onload = () => {
+        const pad = size * 0.22
+        ctx.drawImage(img, pad, pad, size - pad * 2, size - pad * 2)
+        URL.revokeObjectURL(url)
+        resolve()
+      }
+      img.onerror = reject
+      img.src = url
+    })
+  } catch {
+    // fallback: just the colored circle, no logo
+  }
+
+  return new THREE.CanvasTexture(canvas)
 }
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28)
