@@ -1,4 +1,4 @@
-import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import { FiGithub, FiLinkedin, FiMail, FiDownload } from 'react-icons/fi'
 import { info } from '../data/portfolioData'
 import './styles/Landing.css'
 
@@ -17,42 +17,48 @@ export default function Landing() {
         </p>
 
         <div className="landing__actions">
-          <a className="btn-primary" href="#work" onClick={e => { e.preventDefault(); document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' }) }}>
+          <a
+            className="btn-primary"
+            href="#work"
+            onClick={e => { e.preventDefault(); document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' }) }}
+          >
             View My Work
           </a>
-          <a className="btn-ghost" href={`mailto:${info.email}`}>
-            Get in Touch →
+          <a className="btn-ghost" href="/Hatim_Toor_CV.docx" download>
+            <FiDownload /> Download CV
           </a>
         </div>
 
         <div className="landing__socials">
           <div className="landing__socials-divider" />
-          <a href={info.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <FiGithub />
-          </a>
-          <a href={info.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <FiLinkedin />
-          </a>
-          <a href={`mailto:${info.email}`} aria-label="Email">
-            <FiMail />
-          </a>
+          <a href={info.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FiGithub /></a>
+          <a href={info.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FiLinkedin /></a>
+          <a href={`mailto:${info.email}`} aria-label="Email"><FiMail /></a>
         </div>
       </div>
 
-      <div className="landing__hero-right">
-        <div className="landing__tag">AI Automation</div>
-        <div className="landing__tag">n8n Expert</div>
-        <div className="landing__tag">LLM Agents</div>
-        <div className="landing__tag">Voice AI</div>
-        <div className="landing__tag">REST APIs</div>
-        <div className="landing__tag">Workflow Design</div>
-        <div className="landing__badge">
-          <strong>3+</strong>
-          <span>Years of<br />Experience</span>
+      {/* Photo side */}
+      <div className="landing__photo-wrap">
+        <div className="landing__photo-glow" />
+        <div className="landing__photo-frame">
+          <img src="/images/hatim.png" alt="Hatim Toor" className="landing__photo" />
         </div>
-        <div className="landing__badge landing__badge--alt">
-          <strong>5+</strong>
-          <span>AI Projects<br />Shipped</span>
+        <div className="landing__photo-badge landing__photo-badge--tl">
+          <span className="badge-dot" />
+          Available for Hire
+        </div>
+        <div className="landing__photo-badge landing__photo-badge--br">
+          <strong>30%</strong> Revenue Growth Delivered
+        </div>
+        <div className="landing__photo-stat">
+          <div>
+            <strong>3+</strong>
+            <span>Years Exp.</span>
+          </div>
+          <div>
+            <strong>5+</strong>
+            <span>AI Projects</span>
+          </div>
         </div>
       </div>
 

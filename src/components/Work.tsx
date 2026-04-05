@@ -27,7 +27,7 @@ export default function Work() {
                 ))}
               </div>
             </div>
-            <span className="work__item-arrow">↗</span>
+            <span className="work__item-label">Private</span>
           </li>
         ))}
       </ul>
