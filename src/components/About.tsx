@@ -3,31 +3,12 @@ import './styles/About.css'
 
 export default function About() {
   return (
-    <section id="about" className="section about">
+    <section id="about" className="section about fade-in-section">
       <div className="about__inner">
         <div className="about__left">
           <p className="section-label">About Me</p>
           <div className="about__number">01</div>
           <h2 className="section-title">Who I<br />Am</h2>
-
-          <div className="about__stats">
-            <div className="about__stat">
-              <div className="about__stat-value">3+</div>
-              <div className="about__stat-label">Years Experience</div>
-            </div>
-            <div className="about__stat">
-              <div className="about__stat-value">50+</div>
-              <div className="about__stat-label">AI Projects Built</div>
-            </div>
-            <div className="about__stat">
-              <div className="about__stat-value">30%</div>
-              <div className="about__stat-label">Revenue Growth Achieved</div>
-            </div>
-            <div className="about__stat">
-              <div className="about__stat-value">24/7</div>
-              <div className="about__stat-label">Automation Uptime</div>
-            </div>
-          </div>
         </div>
 
         <div className="about__right">

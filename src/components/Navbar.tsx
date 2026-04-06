@@ -2,6 +2,13 @@ import { useEffect, useState } from 'react'
 import { info } from '../data/portfolioData'
 import './styles/Navbar.css'
 
+const NAV_LINKS = [
+  { label: 'About',   id: 'about' },
+  { label: 'Work',    id: 'work' },
+  { label: 'Career',  id: 'career' },
+  { label: 'Contact', id: 'contact' },
+]
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
 
@@ -17,18 +24,19 @@ export default function Navbar() {
 
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
-      <a className="navbar__logo" href="#home">
+      <a className="navbar__logo" href="#home" onClick={e => { e.preventDefault(); scrollTo('home') }}>
         HT<span>.</span>
       </a>
       <ul className="navbar__links">
-        <li><a href="#about" onClick={e => { e.preventDefault(); scrollTo('about') }}>About</a></li>
-        <li><a href="#work" onClick={e => { e.preventDefault(); scrollTo('work') }}>Work</a></li>
-        <li><a href="#career" onClick={e => { e.preventDefault(); scrollTo('career') }}>Career</a></li>
+        {NAV_LINKS.map(({ label, id }) => (
+          <li key={id}>
+            <a href={`#${id}`} onClick={e => { e.preventDefault(); scrollTo(id) }}>
+              {label}
+            </a>
+          </li>
+        ))}
         <li>
-          <a
-            className="navbar__cta"
-            href={`mailto:${info.email}`}
-          >
+          <a className="navbar__cta" href={`mailto:${info.email}`}>
             Hire Me
           </a>
         </li>

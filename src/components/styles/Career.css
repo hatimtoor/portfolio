@@ -74,8 +74,17 @@
   transition: background 0.3s;
 }
 
-.career__entry:hover::before {
+.career__entry:hover::before,
+.career__entry--active::before {
   background: var(--accent);
+}
+
+.career__entry--active {
+  border-bottom-color: rgba(194, 164, 255, 0.15);
+}
+
+.career__entry--active .career__entry-role {
+  color: var(--accent);
 }
 
 .career__entry-period {

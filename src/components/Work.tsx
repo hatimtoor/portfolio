@@ -3,7 +3,7 @@ import './styles/Work.css'
 
 export default function Work() {
   return (
-    <section id="work" className="section work">
+    <section id="work" className="section work fade-in-section">
       <div className="work__header">
         <div>
           <p className="section-label">Selected Work</p>

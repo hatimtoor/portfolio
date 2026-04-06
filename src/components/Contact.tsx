@@ -19,7 +19,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="section contact">
+    <section id="contact" className="section contact fade-in-section">
       <div className="contact__inner">
         <div className="contact__left">
           <p className="section-label">Get In Touch</p>

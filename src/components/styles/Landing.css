@@ -198,7 +198,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transform: scale(1.1) translateY(-8%);
+  transform: scale(0.95) translateY(-5%);
   filter: grayscale(8%);
 }
 

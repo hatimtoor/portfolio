@@ -3,7 +3,7 @@ import './styles/WhatIDo.css'
 
 export default function WhatIDo() {
   return (
-    <section className="section whatido">
+    <section className="section whatido fade-in-section">
       <div className="whatido__header">
         <p className="section-label">What I Do</p>
         <h2 className="section-title">My Services</h2>

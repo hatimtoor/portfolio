@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { useFadeIn } from './hooks/useFadeIn'
 import Cursor from './components/Cursor'
 import Loading from './components/Loading'
 import Navbar from './components/Navbar'
@@ -16,10 +17,25 @@ import './index.css'
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
+  useFadeIn()
 
   const handleLoadComplete = useCallback(() => {
     setLoaded(true)
   }, [])
+
+  // Re-run fade-in after content loads
+  useEffect(() => {
+    if (!loaded) return
+    setTimeout(() => {
+      document.querySelectorAll('.fade-in-section').forEach(el => {
+        const observer = new IntersectionObserver(
+          ([entry]) => { if (entry.isIntersecting) { el.classList.add('is-visible'); observer.disconnect() } },
+          { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+        )
+        observer.observe(el)
+      })
+    }, 100)
+  }, [loaded])
 
   return (
     <>

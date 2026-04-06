@@ -53,7 +53,7 @@ export default function Testimonials() {
   const t = TESTIMONIALS[active]
 
   return (
-    <section className="testimonials section">
+    <section className="testimonials section fade-in-section">
       <p className="section-label">Testimonials</p>
       <h2 className="section-title">Client Words</h2>
 
