@@ -1,24 +1,102 @@
 .techstack {
   border-top: 1px solid var(--border);
-  padding-bottom: 0;
 }
 
-.techstack__placeholder {
-  width: 100%;
-  height: 600px;
-  margin-top: 3rem;
-}
-
-.techstack__canvas {
-  width: 100% !important;
-  height: 600px !important;
-  margin-top: 3rem;
-  border-radius: 16px;
+/* Marquee wrapper */
+.ts-marquee-wrap {
+  position: relative;
+  margin-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .techstack__canvas {
-    height: 400px !important;
-  }
+/* Each row track */
+.ts-marquee-track {
+  overflow: hidden;
+}
+
+.ts-marquee-inner {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: marquee-ltr 28s linear infinite;
+}
+
+.ts-marquee-track--reverse .ts-marquee-inner {
+  animation: marquee-rtl 28s linear infinite;
+}
+
+/* Pause on hover */
+.ts-marquee-wrap:hover .ts-marquee-inner {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-ltr {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marquee-rtl {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* Fade edges */
+.ts-marquee-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ts-marquee-fade--left {
+  left: 0;
+  background: linear-gradient(to right, var(--bg), transparent);
+}
+
+.ts-marquee-fade--right {
+  right: 0;
+  background: linear-gradient(to left, var(--bg), transparent);
+}
+
+/* Badge */
+.ts-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--badge-bg) 18%, transparent);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+  cursor: default;
+  flex-shrink: 0;
+}
+
+.ts-badge:hover {
+  border-color: color-mix(in srgb, var(--badge-bg) 60%, transparent);
+  background: color-mix(in srgb, var(--badge-bg) 28%, transparent);
+  transform: translateY(-2px);
+}
+
+.ts-badge__icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+.ts-badge__name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text);
 }
