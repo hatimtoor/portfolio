@@ -41,7 +41,7 @@ export default function Landing() {
       <div className="landing__photo-wrap">
         <div className="landing__photo-glow" />
         <div className="landing__photo-frame">
-          <img src="/images/hatim.png" alt="Hatim Toor" className="landing__photo" />
+          <img src="https://lh3.googleusercontent.com/d/1tMWnwU4cmhrdOCUC2Tkzxhlub9x77ihb=s1600" alt="Hatim Toor" className="landing__photo" />
         </div>
         <div className="landing__photo-badge landing__photo-badge--tl">
           <span className="badge-dot" />
