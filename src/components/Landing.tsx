@@ -43,23 +43,7 @@ export default function Landing() {
         <div className="landing__photo-frame">
           <img src="/images/hatim.webp" alt="Hatim Toor" className="landing__photo" loading="eager" fetchPriority="high" />
         </div>
-        <div className="landing__photo-badge landing__photo-badge--tl">
-          <span className="badge-dot" />
-          Available for Hire
-        </div>
-        <div className="landing__photo-badge landing__photo-badge--br">
-          <strong>30%</strong> Revenue Growth Delivered
-        </div>
-        <div className="landing__photo-stat">
-          <div>
-            <strong>3+</strong>
-            <span>Years Exp.</span>
-          </div>
-          <div>
-            <strong>50+</strong>
-            <span>AI Projects</span>
-          </div>
-        </div>
+
       </div>
 
       <div className="landing__scroll-hint">
