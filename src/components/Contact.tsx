@@ -11,7 +11,10 @@ export default function Contact() {
     e.preventDefault()
     const subject = encodeURIComponent(`Portfolio enquiry from ${form.name}`)
     const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)
-    window.location.href = `mailto:${info.email}?subject=${subject}&body=${body}`
+    const mailtoLink = `mailto:${info.email}?subject=${subject}&body=${body}`
+    const a = document.createElement('a')
+    a.href = mailtoLink
+    a.click()
     setSent(true)
   }
 
