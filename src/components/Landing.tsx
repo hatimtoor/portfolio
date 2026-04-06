@@ -43,7 +43,12 @@ export default function Landing() {
         <div className="landing__photo-frame">
           <img src="/images/hatim.webp" alt="Hatim Toor" className="landing__photo" loading="eager" fetchPriority="high" />
         </div>
-
+        <div className="landing__tag landing__tag--1">n8n</div>
+        <div className="landing__tag landing__tag--2">OpenAI</div>
+        <div className="landing__tag landing__tag--3">Voice AI</div>
+        <div className="landing__tag landing__tag--4">Python</div>
+        <div className="landing__tag landing__tag--5">LLM Agents</div>
+        <div className="landing__tag landing__tag--6">REST APIs</div>
       </div>
 
       <div className="landing__scroll-hint">

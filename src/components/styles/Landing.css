@@ -286,6 +286,34 @@
   color: var(--muted);
 }
 
+/* Floating tech tags */
+.landing__tag {
+  position: absolute;
+  background: rgba(11, 8, 12, 0.80);
+  border: 1px solid rgba(194, 164, 255, 0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 100px;
+  padding: 0.45rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.landing__tag--1 { top: 8%;  left: -8%;  animation: float-tag 4s ease-in-out infinite; }
+.landing__tag--2 { top: 20%; right: -6%; animation: float-tag 4.5s ease-in-out infinite 0.5s; }
+.landing__tag--3 { top: 48%; left: -12%; animation: float-tag 5s ease-in-out infinite 1s; }
+.landing__tag--4 { bottom: 36%; right: -8%; animation: float-tag 4.2s ease-in-out infinite 0.3s; }
+.landing__tag--5 { bottom: 10%; left: -6%; animation: float-tag 4.8s ease-in-out infinite 0.8s; }
+.landing__tag--6 { bottom: 18%; right: -10%; animation: float-tag 5.2s ease-in-out infinite 1.2s; }
+
+@keyframes float-tag {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
 /* Scroll hint */
 .landing__scroll-hint {
   position: absolute;
