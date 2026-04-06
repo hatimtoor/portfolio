@@ -156,11 +156,7 @@ Rapier and post-processing only download when the user scrolls to the Tech Stack
 | Muted | `rgba(234, 229, 236, 0.45)` |
 | Font | Inter (variable, 100–900) |
 
----
 
-## Inspiration
-
-Inspired by [MoncyDev/Portfolio-Website](https://github.com/MoncyDev/Portfolio-Website) and [khushi-varshney17/Portfolio_Shrishti](https://github.com/khushi-varshney17/Portfolio_Shrishti).
 
 ---
 
