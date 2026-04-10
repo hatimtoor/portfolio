@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { useFadeIn } from './hooks/useFadeIn'
 import Cursor from './components/Cursor'
 import Loading from './components/Loading'
@@ -58,6 +59,7 @@ export default function App() {
           <ChatBot />
         </>
       )}
+      <SpeedInsights />
     </>
   )
 }
