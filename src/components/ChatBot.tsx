@@ -17,12 +17,20 @@ const STARTERS = [
 function getResponse(input: string): string {
   const q = input.toLowerCase()
 
+  if (/hatassembly|hat assembly|rag|workflow generator|794/i.test(q)) {
+    return `**HatAssembly** is one of Hatim's flagship open-source projects.\n\n• RAG-powered n8n workflow generator\n• 794 n8n node schemas indexed in Supabase with OpenAI embeddings\n• Takes plain text input and outputs fully deployable n8n workflow JSON\n• Multi-agent pipeline using Claude Opus + Gemini\n• Dual input via chat and webhook\n\nView it on GitHub: github.com/hatimtoor/HatAssembly`
+  }
+
+  if (/sorcer|sorcerer|agency portal|crm factory|clarity/i.test(q)) {
+    return `**Sorcer AI** is Hatim's full-stack automation agency internal portal.\n\n• AI clarifier conversation drives a CLARITY_READY signal\n• Gemini infers required credentials and cross-references a Supabase vault\n• Smart-dispatches to n8n webhooks or a CRM factory\n• Supports GHL, ActiveCampaign, and HubSpot out of the box\n• Built with Next.js 16 + Supabase + Gemini\n\nView it on GitHub: github.com/hatimtoor/sorcer-ai`
+  }
+
   if (/project|built|work|portfolio|automation/i.test(q)) {
-    return `Hatim has built 50+ AI automation projects. Key highlights:\n\n• **AI Outbound Voice Agent** — n8n + VAPI, automated cold-calling with dynamic scripts\n• **Multi-Platform Content Pipeline** — AI-generated video published to YouTube, TikTok & Instagram 24/7\n• **AI Email & Calendar Management** — LLM-powered email triage and meeting scheduling\n• **WhatsApp AI Booking Agent** — Qualifies leads and books appointments autonomously\n• **Inbound Call AI Handler** — Fields customer calls and progresses leads without human input\n\nAll projects deliver measurable outcomes — ask me about any specific one!`
+    return `Hatim has built 50+ AI automation projects. Key highlights:\n\n• **HatAssembly** — RAG-powered n8n workflow generator. 794 node schemas indexed in Supabase, generates deployable workflow JSON from plain text via Claude + Gemini agents. Open source on GitHub.\n• **Sorcer AI** — Full-stack automation agency portal. AI clarifier → credential detection → smart dispatch to n8n or CRM factory (GHL, ActiveCampaign, HubSpot). Open source on GitHub.\n• **AI Outbound Voice Agent** — n8n + VAPI, automated cold-calling with dynamic scripts\n• **Multi-Platform Content Pipeline** — AI-generated video published to YouTube, TikTok & Instagram 24/7\n• **AI Email & Calendar Management** — LLM-powered email triage and meeting scheduling\n• **WhatsApp AI Booking Agent** — Qualifies leads and books appointments autonomously\n• **Inbound Call AI Handler** — Fields customer calls and progresses leads without human input\n\nAsk me about any specific project for more detail!`
   }
 
   if (/stack|tech|tool|language|use|skill|python|n8n|vapi|llm|api/i.test(q)) {
-    return `Hatim's core stack:\n\n**Automation:** n8n (Expert), Webhooks, REST APIs\n**AI / LLMs:** OpenAI API, VAPI Voice AI, Prompt Engineering\n**Integrations:** WhatsApp Business API, Google Workspace, YouTube API, Instagram API\n**Code:** Python (Intermediate), JavaScript, TypeScript\n**Web:** React, Node.js, MongoDB, PostgreSQL, Docker\n\nHis n8n expertise is at expert level — he leads a team at Schmoozzer building end-to-end automation pipelines.`
+    return `Hatim's core stack:\n\n**Automation:** n8n (Expert), Webhooks, REST APIs\n**AI / LLMs:** OpenAI API, VAPI Voice AI, Prompt Engineering, Claude, Gemini\n**Integrations:** WhatsApp Business API, Google Workspace, YouTube API, Instagram API\n**Code:** Python (Intermediate), JavaScript, TypeScript\n**Web:** React, Next.js, Node.js, MongoDB, PostgreSQL, Supabase, Docker\n\nHis n8n expertise is at expert level — he leads a team at Schmoozzer building end-to-end automation pipelines.`
   }
 
   if (/hire|available|open|remote|job|role|opportunit|freelan/i.test(q)) {
@@ -33,7 +41,7 @@ function getResponse(input: string): string {
     return `You can reach Hatim at:\n\n📧 hatimtoor2025@gmail.com\n📱 +92 327 808 0883\n💼 linkedin.com/in/hatim-toor\n🐙 github.com/hatimtoor\n\nOr just use the contact form at the bottom of this page — he typically responds within 24 hours.`
   }
 
-  if (/experience|year|background|work|career|job|schmoozzer|orchard|falcon/i.test(q)) {
+  if (/experience|year|background|career|job|schmoozzer|orchard|falcon/i.test(q)) {
     return `Hatim has 3+ years of experience:\n\n**Automation Team Lead @ Schmoozzer** (Sep 2025 – Present)\nLeads engineers building low-code automation and web apps for clients.\n\n**Sales Manager @ Orchard Logistics** (Feb 2024 – May 2025)\nManaged a team of 8, achieved 30% revenue growth through automation.\n\n**Truck Dispatcher @ Falcon Dispatch** (Oct 2023 – Jan 2024)\nStreamlined dispatch workflows and real-time customer communications.\n\nHe's also pursuing a BS in Robotics & Intelligent Systems at UMT Lahore.`
   }
 
@@ -53,11 +61,15 @@ function getResponse(input: string): string {
     return `You can download Hatim's CV directly from this portfolio — there's a "Download CV" button right in the hero section at the top of the page.\n\nAlternatively, reach out at hatimtoor2025@gmail.com and he'll send it over.`
   }
 
-  if (/who|about|hatim|introduce|yourself/i.test(q)) {
-    return `Hatim Toor is an **AI Automation Engineer and Team Lead** based in Sheikhupura, Pakistan.\n\nHe specialises in building intelligent systems that work around the clock — from n8n automation pipelines to voice AI sales agents. Currently leading the engineering team at Schmoozzer while pursuing a degree in Robotics & Intelligent Systems.\n\nWith 3+ years of hands-on experience and 50+ projects shipped, he brings a business-first perspective to every automation — built to deliver real outcomes, not just clever tech.`
+  if (/github|open.?source|repo/i.test(q)) {
+    return `Hatim has two open-source projects on GitHub:\n\n• **HatAssembly** — github.com/hatimtoor/HatAssembly\nRAG-powered n8n workflow generator with 794 node schemas\n\n• **Sorcer AI** — github.com/hatimtoor/sorcer-ai\nFull-stack automation agency portal with AI-driven CRM dispatch\n\nBrowse his full profile at github.com/hatimtoor`
   }
 
-  return `I'm not sure about that specific question, but I can help with:\n\n• Hatim's projects and work\n• His tech stack and skills\n• Availability and hiring\n• Contact details\n• Experience and background\n• Services he offers\n\nWhat would you like to know?`
+  if (/who|about|hatim|introduce|yourself/i.test(q)) {
+    return `Hatim Toor is an **AI Automation Engineer and Team Lead** based in Sheikhupura, Pakistan.\n\nHe specialises in building intelligent systems that work around the clock — from n8n automation pipelines to voice AI sales agents. Currently leading the engineering team at Schmoozzer while pursuing a degree in Robotics & Intelligent Systems.\n\nHis two flagship open-source projects are **HatAssembly** (a RAG-powered n8n workflow generator) and **Sorcer AI** (a full-stack automation agency portal) — both available on GitHub.\n\nWith 3+ years of hands-on experience and 50+ projects shipped, he brings a business-first perspective to every automation — built to deliver real outcomes, not just clever tech.`
+  }
+
+  return `I'm not sure about that specific question, but I can help with:\n\n• Hatim's projects and work (including HatAssembly & Sorcer AI)\n• His tech stack and skills\n• Availability and hiring\n• Contact details\n• Experience and background\n• Services he offers\n\nWhat would you like to know?`
 }
 
 export default function ChatBot() {
@@ -101,7 +113,6 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* Toggle button */}
       <button
         className={`chatbot__toggle${open ? ' chatbot__toggle--open' : ''}`}
         onClick={() => setOpen(o => !o)}
@@ -111,7 +122,6 @@ export default function ChatBot() {
         {!open && <span className="chatbot__toggle-label">Ask me anything</span>}
       </button>
 
-      {/* Panel */}
       <div className={`chatbot__panel${open ? ' chatbot__panel--open' : ''}`}>
         <div className="chatbot__header">
           <div className="chatbot__header-avatar">HT</div>
