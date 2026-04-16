@@ -121,7 +121,7 @@
   border-radius: 100px;
 }
 
-/* Private badge — unchanged */
+/* Private badge */
 .work__item-label {
   font-size: 0.65rem;
   font-weight: 600;
@@ -170,11 +170,24 @@
 
 @media (max-width: 768px) {
   .work__item {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
   }
 
-  .work__item-label,
-  .work__item-github {
+  /* Hide Private badge on mobile — not useful */
+  .work__item-label {
     display: none;
+  }
+
+  /* Show GitHub button as icon-only on mobile */
+  .work__item-github {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .work__item-github span {
+    display: none;
+  }
+
+  .work__item-github svg {
+    font-size: 1.1rem;
   }
 }
