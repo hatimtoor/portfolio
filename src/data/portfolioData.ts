@@ -53,12 +53,31 @@ export const services = [
 
 export const projects = [
   {
+    title: 'HatAssembly',
+    tech: 'n8n · Supabase · OpenAI · Claude',
+    description:
+      'RAG-powered n8n workflow generator. 794 n8n node schemas indexed in Supabase with OpenAI embeddings — takes plain text input and outputs fully deployable n8n workflow JSON via a multi-agent pipeline (Claude Opus + Gemini). Dual input via chat and webhook.',
+    tags: ['n8n', 'RAG', 'Supabase', 'LLM Agents', 'OpenAI', 'Claude'],
+    outcome: 'Generates production-ready n8n workflows from natural language — zero manual node-building.',
+    github: 'https://github.com/hatimtoor/HatAssembly',
+  },
+  {
+    title: 'Sorcer AI',
+    tech: 'Next.js · Supabase · Gemini · n8n',
+    description:
+      'Full-stack automation agency internal portal. An AI clarifier conversation drives a CLARITY_READY signal, Gemini infers required credentials and cross-references a Supabase vault, then smart-dispatches to n8n webhooks or a CRM factory supporting GHL, ActiveCampaign, and HubSpot.',
+    tags: ['Next.js', 'Supabase', 'Gemini', 'GHL', 'ActiveCampaign', 'n8n'],
+    outcome: 'End-to-end client onboarding to automation delivery — no manual handoffs at any stage.',
+    github: 'https://github.com/hatimtoor/sorcer-ai',
+  },
+  {
     title: 'AI Outbound Sales Voice Agent',
     tech: 'n8n + VAPI',
     description:
       'End-to-end outbound cold-calling agent integrating n8n orchestration with VAPI voice AI — automating lead dialling, dynamic script delivery, and response logging.',
     tags: ['n8n', 'VAPI', 'REST API', 'Webhooks'],
     outcome: 'Automated full call lifecycle, improved lead contact rate & pipeline velocity.',
+    github: null,
   },
   {
     title: 'Multi-Platform Content Automation',
@@ -67,6 +86,7 @@ export const projects = [
       'Fully automated n8n workflows for AI-generated short-form video content published to YouTube, TikTok, and Instagram at near-zero marginal cost.',
     tags: ['n8n', 'LLM APIs', 'YouTube API', 'Instagram API'],
     outcome: 'High-volume content production pipeline running 24/7 without human input.',
+    github: null,
   },
   {
     title: 'AI Email & Calendar Management',
@@ -75,6 +95,7 @@ export const projects = [
       'Intelligent automation for email triage, smart reply drafting (LLM-assisted), meeting scheduling, and calendar conflict resolution.',
     tags: ['n8n', 'Gmail API', 'Google Calendar', 'LLM'],
     outcome: 'Eliminated repetitive scheduling overhead, improved executive productivity.',
+    github: null,
   },
   {
     title: 'WhatsApp AI Booking Agent',
@@ -83,6 +104,7 @@ export const projects = [
       'Conversational AI agent on WhatsApp that qualifies inbound leads, collects customer details, and autonomously books appointments into a shared calendar.',
     tags: ['n8n', 'WhatsApp API', 'LLM', 'Google Calendar'],
     outcome: 'Reduced time-to-booking by automating the full customer interaction funnel 24/7.',
+    github: null,
   },
   {
     title: 'Inbound Call AI Sales Handler',
@@ -91,6 +113,7 @@ export const projects = [
       'Inbound call automation capable of fielding customer enquiries, conducting needs qualification, and progressing leads through the sales funnel without human intervention.',
     tags: ['n8n', 'VAPI', 'Telephony API', 'CRM'],
     outcome: 'Full inbound funnel handled autonomously — zero agent required.',
+    github: null,
   },
 ];
 
