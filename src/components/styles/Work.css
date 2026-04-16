@@ -121,6 +121,7 @@
   border-radius: 100px;
 }
 
+/* Private badge — unchanged */
 .work__item-label {
   font-size: 0.65rem;
   font-weight: 600;
@@ -135,12 +136,45 @@
   margin-top: 0.3rem;
 }
 
+/* GitHub button — open source projects */
+.work__item-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(194, 164, 255, 0.3);
+  padding: 0.4rem 0.9rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 0.3rem;
+  transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s;
+  cursor: none;
+}
+
+.work__item-github svg {
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.work__item-github:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  transform: translateY(-2px);
+}
+
 @media (max-width: 768px) {
   .work__item {
     grid-template-columns: auto 1fr;
   }
 
-  .work__item-label {
+  .work__item-label,
+  .work__item-github {
     display: none;
   }
 }
