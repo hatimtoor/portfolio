@@ -24,7 +24,7 @@ export default function Landing() {
           >
             View My Work
           </a>
-          <a className="btn-ghost" href="/Hatim_Toor_CV.docx" download>
+          <a className="btn-ghost" href="/Resume.docx" download>
             <FiDownload /> Download CV
           </a>
         </div>
