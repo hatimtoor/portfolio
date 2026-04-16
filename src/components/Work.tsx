@@ -1,3 +1,4 @@
+import { FiGithub } from 'react-icons/fi'
 import { projects } from '../data/portfolioData'
 import './styles/Work.css'
 
@@ -16,6 +17,7 @@ export default function Work() {
         {projects.map((p, i) => (
           <li key={p.title} className="work__item">
             <span className="work__item-num">0{i + 1}</span>
+
             <div className="work__item-body">
               <p className="work__item-tech">{p.tech}</p>
               <h3 className="work__item-title">{p.title}</h3>
@@ -27,7 +29,21 @@ export default function Work() {
                 ))}
               </div>
             </div>
-            <span className="work__item-label">Private</span>
+
+            {p.github ? (
+              <a
+                href={p.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="work__item-github"
+                aria-label={`View ${p.title} on GitHub`}
+              >
+                <FiGithub />
+                <span>View on GitHub</span>
+              </a>
+            ) : (
+              <span className="work__item-label">Private</span>
+            )}
           </li>
         ))}
       </ul>
