@@ -11,8 +11,8 @@
 }
 
 .testimonials__card {
-  background: rgba(194, 164, 255, 0.04);
-  border: 1px solid rgba(194, 164, 255, 0.12);
+  background: color-mix(in oklab, var(--accent) 4%, var(--bg-1));
+  border: 1px solid color-mix(in oklab, var(--accent) 12%, transparent);
   border-radius: 20px;
   padding: 3rem;
   position: relative;
@@ -54,7 +54,7 @@
   height: 44px;
   border-radius: 50%;
   background: var(--accent-dim);
-  border: 1px solid rgba(194, 164, 255, 0.3);
+  border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,7 +99,7 @@
 }
 
 .testimonials__btn:hover {
-  border-color: rgba(194, 164, 255, 0.4);
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
   color: var(--accent);
   background: var(--accent-dim);
 }

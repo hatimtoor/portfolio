@@ -1,42 +1,61 @@
 import { useState, useCallback, useEffect } from 'react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import { Analytics } from '@vercel/analytics/react'
-import { useFadeIn } from './hooks/useFadeIn'
 import Cursor from './components/Cursor'
 import Loading from './components/Loading'
-import Navbar from './components/Navbar'
-import Landing from './components/Landing'
-import StatsBar from './components/StatsBar'
+import StatusBar from './components/StatusBar'
+import Hero from './components/Hero'
 import About from './components/About'
-import WhatIDo from './components/WhatIDo'
-import TechStack from './components/TechStack'
+import Pipeline from './components/Pipeline'
 import Work from './components/Work'
 import Career from './components/Career'
 import Testimonials from './components/Testimonials'
 import Contact from './components/Contact'
+import SysInfo from './components/SysInfo'
 import ChatBot from './components/ChatBot'
 import './index.css'
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
-  useFadeIn()
 
   const handleLoadComplete = useCallback(() => {
     setLoaded(true)
   }, [])
 
-  // Re-run fade-in after content loads
+  // Fade-in for source components (.fade-in → .visible)
   useEffect(() => {
     if (!loaded) return
-    setTimeout(() => {
-      document.querySelectorAll('.fade-in-section').forEach(el => {
-        const observer = new IntersectionObserver(
-          ([entry]) => { if (entry.isIntersecting) { el.classList.add('is-visible'); observer.disconnect() } },
-          { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
-        )
-        observer.observe(el)
-      })
-    }, 100)
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible')
+            obs.unobserve(e.target)
+          }
+        })
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    )
+    document.querySelectorAll('.fade-in').forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [loaded])
+
+  // Fade-in for kept components (.fade-in-section → .is-visible)
+  useEffect(() => {
+    if (!loaded) return
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible')
+            obs.unobserve(e.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+    )
+    document.querySelectorAll('.fade-in-section').forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
   }, [loaded])
 
   return (
@@ -45,18 +64,17 @@ export default function App() {
       <Loading onComplete={handleLoadComplete} />
       {loaded && (
         <>
-          <Navbar />
+          <StatusBar />
           <main>
-            <Landing />
-            <StatsBar />
-            <About />
-            <WhatIDo />
-            <TechStack />
-            <Work />
-            <Career />
+            <Hero />
+            <div className="fade-in"><About /></div>
+            <div className="fade-in"><Pipeline /></div>
+            <div className="fade-in"><Work /></div>
+            <div className="fade-in"><Career /></div>
             <Testimonials />
-            <Contact />
+            <div className="fade-in"><Contact /></div>
           </main>
+          <SysInfo />
           <ChatBot />
         </>
       )}

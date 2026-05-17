@@ -7,113 +7,157 @@ export const info = {
   location: 'Sheikhupura, Pakistan',
   github: 'https://github.com/hatimtoor',
   linkedin: 'https://www.linkedin.com/in/hatim-toor',
+  yearsExp: '3+',
+  projectsCount: '50+',
+  revGrowth: '30%',
   summary:
-    'AI Automation Engineer and Team Lead with 3+ years of hands-on expertise in n8n workflow automation, LLM integration, and intelligent agent development. Designing end-to-end automation pipelines that reduce manual effort, integrate REST APIs, and leverage AI models to deliver measurable business outcomes.',
-};
+    'AI Automation Engineer and Team Lead with three years of hands-on expertise in n8n workflow automation, LLM integration, and intelligent agent development.',
+  longBio:
+    'I design end-to-end automation pipelines that reduce manual effort, integrate REST APIs, and leverage AI models to deliver measurable business outcomes — for operators, agencies, and engineering teams that need their software to do the work, not the staff.',
+} as const;
 
 export const skills = [
   { label: 'n8n Automation', level: 'Expert' },
   { label: 'LLM / AI Agents', level: '' },
   { label: 'REST API Integration', level: '' },
-  { label: 'Voice AI (VAPI)', level: '' },
+  { label: 'Voice AI · VAPI', level: '' },
   { label: 'Workflow Orchestration', level: '' },
   { label: 'Python', level: 'Intermediate' },
   { label: 'Web App Development', level: '' },
   { label: 'Data Pipelines', level: '' },
   { label: 'Prompt Engineering', level: '' },
   { label: 'Team Leadership', level: '' },
-];
+] as const;
 
 export const services = [
   {
+    n: '01',
     title: 'Automation',
     description:
-      'End-to-end workflow automation using n8n — covering API integrations, branching logic, error handling, webhooks, and scheduling to eliminate manual effort.',
-    tags: ['n8n', 'Webhooks', 'Scheduling', 'Data Pipelines', 'REST APIs'],
+      'End-to-end workflow automation in n8n — API integrations, branching logic, error handling, webhooks, scheduling. Manual effort goes to zero.',
+    tags: ['n8n', 'Webhooks', 'Scheduling', 'Pipelines', 'REST'],
   },
   {
+    n: '02',
     title: 'AI & LLMs',
     description:
-      'Intelligent agent development powered by LLMs and voice AI. From outbound sales bots to email triage systems — I build AI that works autonomously.',
-    tags: ['LLM Agents', 'VAPI', 'Prompt Engineering', 'OpenAI API', 'Voice AI'],
+      'Intelligent agent development powered by LLMs and voice AI. Outbound sales bots, email triage, RAG, multi-agent pipelines.',
+    tags: ['LLMs', 'VAPI', 'Prompts', 'OpenAI', 'Voice AI'],
   },
   {
+    n: '03',
     title: 'Integrations',
     description:
-      'Connecting platforms and services via REST APIs — WhatsApp Business, Google Workspace, YouTube, Instagram, CRMs and more into unified pipelines.',
-    tags: ['WhatsApp API', 'Google Workspace', 'OAuth', 'JSON', 'CRM'],
+      'Plumbing between platforms — WhatsApp Business, Google Workspace, YouTube, Instagram, CRMs — into one coherent system.',
+    tags: ['WhatsApp', 'Workspace', 'OAuth', 'JSON', 'CRM'],
   },
   {
+    n: '04',
     title: 'Web Apps',
     description:
-      'Lightweight web applications that bridge no-code automation with custom front-end interfaces — delivering complete, polished solutions.',
-    tags: ['React', 'TypeScript', 'Low-code', 'UI Design', 'Vite'],
+      'Light front-ends that turn back-end automation into real product — internal tools, dashboards, client portals, smart forms.',
+    tags: ['React', 'TypeScript', 'Vite', 'Low-code', 'UI'],
   },
-];
+] as const;
 
-export const projects = [
+export const stack = [
+  'n8n', 'OpenAI', 'Anthropic', 'Claude', 'Gemini', 'Python', 'Node.js',
+  'TypeScript', 'React', 'Next.js', 'Supabase', 'PostgreSQL', 'MongoDB',
+  'Docker', 'VAPI', 'WhatsApp API', 'Google Workspace', 'HubSpot',
+  'ActiveCampaign', 'GHL', 'Webhooks', 'REST', 'RAG', 'LangChain',
+] as const;
+
+export type Project = {
+  title: string;
+  field: string;
+  tech: string;
+  description: string;
+  outcome: string;
+  tags: string[];
+  layout: 'featured' | 'large' | 'mid' | 'small';
+  year: string;
+  github?: string | null;
+};
+
+export const projects: Project[] = [
   {
     title: 'HatAssembly',
+    field: 'Field Report №01',
     tech: 'n8n · Supabase · OpenAI · Claude',
     description:
-      'RAG-powered n8n workflow generator. 794 n8n node schemas indexed in Supabase with OpenAI embeddings — takes plain text input and outputs fully deployable n8n workflow JSON via a multi-agent pipeline (Claude Opus + Gemini). Dual input via chat and webhook.',
-    tags: ['n8n', 'RAG', 'Supabase', 'LLM Agents', 'OpenAI', 'Claude'],
-    outcome: 'Generates production-ready n8n workflows from natural language — zero manual node-building.',
+      'A RAG-powered n8n workflow generator. 794 node schemas indexed in Supabase with OpenAI embeddings; takes a plain-text brief and returns deployable n8n JSON via a multi-agent pipeline (Claude Opus + Gemini).',
+    outcome: 'Production-ready n8n workflows from natural language — zero manual node-building.',
+    tags: ['n8n', 'RAG', 'LLM Agents', 'Supabase', 'OpenAI'],
+    layout: 'featured',
+    year: '2025',
     github: 'https://github.com/hatimtoor/HatAssembly',
   },
   {
     title: 'Sorcer AI',
+    field: 'Field Report №02',
     tech: 'Next.js · Supabase · Gemini · n8n',
     description:
-      'Full-stack automation agency internal portal. An AI clarifier conversation drives a CLARITY_READY signal, Gemini infers required credentials and cross-references a Supabase vault, then smart-dispatches to n8n webhooks or a CRM factory supporting GHL, ActiveCampaign, and HubSpot.',
-    tags: ['Next.js', 'Supabase', 'Gemini', 'GHL', 'ActiveCampaign', 'n8n'],
-    outcome: 'End-to-end client onboarding to automation delivery — no manual handoffs at any stage.',
+      'Full-stack automation agency portal. An AI clarifier conversation drives a CLARITY_READY signal; Gemini cross-references a Supabase credentials vault and smart-dispatches to n8n webhooks or a CRM factory (GHL, ActiveCampaign, HubSpot).',
+    outcome: 'End-to-end client onboarding to automation delivery — no manual handoffs.',
+    tags: ['Next.js', 'Gemini', 'Supabase', 'CRM'],
+    layout: 'large',
+    year: '2025',
     github: 'https://github.com/hatimtoor/sorcer-ai',
   },
   {
-    title: 'AI Outbound Sales Voice Agent',
-    tech: 'n8n + VAPI',
+    title: 'Outbound Voice Agent',
+    field: 'Field Report №03',
+    tech: 'n8n · VAPI',
     description:
-      'End-to-end outbound cold-calling agent integrating n8n orchestration with VAPI voice AI — automating lead dialling, dynamic script delivery, and response logging.',
-    tags: ['n8n', 'VAPI', 'REST API', 'Webhooks'],
-    outcome: 'Automated full call lifecycle, improved lead contact rate & pipeline velocity.',
-    github: null,
+      'End-to-end outbound cold-calling agent integrating n8n orchestration with VAPI voice AI — lead dialling, dynamic script delivery, response logging.',
+    outcome: 'Full call lifecycle automated, lead contact rate and pipeline velocity up.',
+    tags: ['n8n', 'VAPI', 'Voice AI'],
+    layout: 'small',
+    year: '2025',
   },
   {
-    title: 'Multi-Platform Content Automation',
-    tech: 'n8n + LLM APIs',
+    title: 'WhatsApp Booking Agent',
+    field: 'Field Report №04',
+    tech: 'n8n · WhatsApp Business',
     description:
-      'Fully automated n8n workflows for AI-generated short-form video content published to YouTube, TikTok, and Instagram at near-zero marginal cost.',
-    tags: ['n8n', 'LLM APIs', 'YouTube API', 'Instagram API'],
-    outcome: 'High-volume content production pipeline running 24/7 without human input.',
-    github: null,
+      'Conversational AI on WhatsApp that qualifies inbound leads, collects details, and books appointments into a shared calendar autonomously.',
+    outcome: 'Time-to-booking cut to zero — full customer funnel runs 24/7.',
+    tags: ['n8n', 'WhatsApp', 'LLM', 'Calendar'],
+    layout: 'mid',
+    year: '2024',
   },
   {
-    title: 'AI Email & Calendar Management',
-    tech: 'n8n + Google Workspace',
+    title: 'Content Multiplier',
+    field: 'Field Report №05',
+    tech: 'n8n · LLM APIs',
     description:
-      'Intelligent automation for email triage, smart reply drafting (LLM-assisted), meeting scheduling, and calendar conflict resolution.',
-    tags: ['n8n', 'Gmail API', 'Google Calendar', 'LLM'],
-    outcome: 'Eliminated repetitive scheduling overhead, improved executive productivity.',
-    github: null,
+      'Fully automated workflows for AI-generated short-form video, published to YouTube, TikTok, and Instagram at near-zero marginal cost.',
+    outcome: 'High-volume content pipeline running 24/7 without human input.',
+    tags: ['n8n', 'LLMs', 'YouTube', 'Instagram'],
+    layout: 'mid',
+    year: '2024',
   },
   {
-    title: 'WhatsApp AI Booking Agent',
-    tech: 'n8n + WhatsApp Business API',
+    title: 'Email & Calendar Brain',
+    field: 'Field Report №06',
+    tech: 'n8n · Google Workspace',
     description:
-      'Conversational AI agent on WhatsApp that qualifies inbound leads, collects customer details, and autonomously books appointments into a shared calendar.',
-    tags: ['n8n', 'WhatsApp API', 'LLM', 'Google Calendar'],
-    outcome: 'Reduced time-to-booking by automating the full customer interaction funnel 24/7.',
-    github: null,
+      'Intelligent automation for email triage, LLM-assisted reply drafting, meeting scheduling, and calendar conflict resolution.',
+    outcome: 'Eliminated repetitive scheduling overhead for two exec teams.',
+    tags: ['n8n', 'Gmail', 'Calendar', 'LLM'],
+    layout: 'small',
+    year: '2024',
   },
   {
-    title: 'Inbound Call AI Sales Handler',
-    tech: 'n8n + VAPI',
+    title: 'Inbound Call Handler',
+    field: 'Field Report №07',
+    tech: 'n8n · VAPI',
     description:
-      'Inbound call automation capable of fielding customer enquiries, conducting needs qualification, and progressing leads through the sales funnel without human intervention.',
-    tags: ['n8n', 'VAPI', 'Telephony API', 'CRM'],
+      'Inbound call automation that fields customer enquiries, qualifies needs, and progresses leads through the sales funnel — no human in the loop.',
     outcome: 'Full inbound funnel handled autonomously — zero agent required.',
-    github: null,
+    tags: ['n8n', 'VAPI', 'Telephony', 'CRM'],
+    layout: 'large',
+    year: '2024',
   },
 ];
 
@@ -121,7 +165,7 @@ export const experience = [
   {
     role: 'Automation Team Lead',
     company: 'Schmoozzer',
-    period: 'Sep 2025 – Present',
+    period: 'Sep 2025 — Present',
     bullets: [
       'Lead a team of engineers delivering low-code/no-code automation solutions and custom web apps.',
       'Architect end-to-end n8n workflows covering API integrations, data pipelines, and AI agent deployment.',
@@ -131,17 +175,17 @@ export const experience = [
   {
     role: 'Sales Manager',
     company: 'Orchard Logistics',
-    period: 'Feb 2024 – May 2025',
+    period: 'Feb 2024 — May 2025',
     bullets: [
       'Led a team of 8 sales agents — pipeline performance, KPI tracking, and coaching.',
-      'Achieved 30% increase in company revenue through sales process redesign and workflow automation.',
-      'Introduced automation tooling to reduce manual data entry and reporting time.',
+      'Drove 30% revenue growth via sales-process redesign and workflow automation.',
+      'Introduced automation tooling to compress manual data entry and reporting time.',
     ],
   },
   {
     role: 'Truck Dispatcher',
-    company: 'Falcon Dispatch Company',
-    period: 'Oct 2023 – Jan 2024',
+    company: 'Falcon Dispatch',
+    period: 'Oct 2023 — Jan 2024',
     bullets: [
       'Managed real-time customer communications and coordinated multi-carrier load scheduling.',
       'Streamlined dispatch workflows to improve on-time delivery rates.',
@@ -152,12 +196,19 @@ export const experience = [
 export const education = [
   {
     degree: 'BS Robotics & Intelligent Systems',
-    institution: 'University of Management and Technology (UMT), Lahore',
+    institution: 'University of Management and Technology · Lahore',
     period: 'Expected 2027',
   },
   {
-    degree: 'Intermediate (Pre-Engineering)',
-    institution: 'APEX College, Sheikhupura',
+    degree: 'Intermediate · Pre-Engineering',
+    institution: 'APEX College · Sheikhupura',
     period: '2023',
   },
 ];
+
+export const filterTags = ['All', 'n8n', 'LLM', 'Voice AI', 'RAG', 'WhatsApp', 'CRM'] as const;
+
+export function matchesTag(p: Project, tag: string): boolean {
+  if (tag === 'All') return true;
+  return (p.tags || []).join(' ').toLowerCase().includes(tag.toLowerCase());
+}
